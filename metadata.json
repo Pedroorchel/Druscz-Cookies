@@ -1,0 +1,6 @@
+{
+  "name": "Druszcz Cookies",
+  "description": "Cookies artesanais do atleta Pedro Affonso Druszcz (VKR Araucária Vôlei) para custear o tratamento do sarcoma de Ewing. Encomendas pelo WhatsApp (41) 99611-5284 e iFood.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
