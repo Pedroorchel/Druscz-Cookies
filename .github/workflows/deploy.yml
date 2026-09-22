@@ -6,22 +6,12 @@ on:
       - main
       - master
 
-# Permissões necessárias para publicar diretamente no GitHub Pages usando Actions
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Garante apenas uma publicação ativa por vez
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -31,21 +21,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install and Build 🔧
         run: |
           npm install
           npm run build
 
-      - name: Setup Pages ⚙️
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact 📦
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: './dist'
-
-      - name: Deploy to GitHub Pages 🚀
-        id: deployment
-        uses: actions/deploy-pages@v4
+          folder: dist # Pasta gerada pelo Vite contendo os arquivos finais compilados
+          branch: gh-pages # Nome da branch de publicação automática do GitHub Pages
